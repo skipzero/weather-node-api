@@ -1,0 +1,29 @@
+{
+  "name": "weather-node-api",
+  "version": "1.0.0",
+  "description": "api for weather app",
+  "homepage": "https://github.com/skipzero/weather-node-api#readme",
+  "bugs": {
+    "url": "https://github.com/skipzero/weather-node-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skipzero/weather-node-api.git"
+  },
+  "type":"module",
+  "license": "MIT",
+  "author": "skip mcbride",
+  "main": "index.js",
+  "scripts": {
+    "devSever": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "6.14"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
