@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/skipzero/weather-node-api.git"
   },
-  "type":"module",
+  "type":"commonjs",
   "license": "MIT",
   "author": "skip mcbride",
   "main": "index.js",

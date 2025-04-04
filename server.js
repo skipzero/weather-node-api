@@ -1,16 +1,15 @@
-import dotenv from 'dotenv'
-dotenv.config()
+require('dotenv').config()
 
-import express from 'express'
+const express = require('express')
 
+const mongoose = require('mongoose')
+const  User = require('./models/users.js')
+
+const routes = require('./routes/weatherRoutes')
 const {MONGODB_URL, PORT} = process.env
 
 const app = express()
 
-import mongoose from "mongoose"
-import User from './models/users.js'
-
-import weatherRoutes from './routes/weatherRoutes.js'
 
 // 
 mongoose.connect(MONGODB_URL)
@@ -23,7 +22,14 @@ const dbName = 'pagination'
 
 app.use(express.json())
 
-app.use('/weather', weatherRoutes)
+// routes.stack.forEach(layer => {
+//   console.log(layer)
+// })
+
+app.use('/weather', routes)
+// app.get('/weather', (req, res) => {
+//   res.send('triggered...')
+// })
 
 app.get('/users', paginatedResults(User), (req, res) => {
 
