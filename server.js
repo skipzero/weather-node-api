@@ -1,18 +1,20 @@
 require('dotenv').config()
 
 const express = require('express')
+const rateLimit = require('express-rate-limit')
 
 const mongoose = require('mongoose')
 const  User = require('./models/users.js')
 
-const routes = require('./routes/weatherRoutes')
-const {MONGODB_URL, PORT} = process.env
+const weatherRoutes = require('./routes/weatherRoutes')
+const userRoutes = require('./routes/userRoutes')
+const {MONGODB_URL, PORT, DB_NAME} = process.env
 
 const app = express()
 
 
 // 
-mongoose.connect(MONGODB_URL)
+mongoose.connect(`${MONGODB_URL}/${DB_NAME}`)
 const db = mongoose.connection
 
 db.on('error', err => console.error(`Error: ${err}`))
@@ -22,16 +24,15 @@ const dbName = 'pagination'
 
 app.use(express.json())
 
-// routes.stack.forEach(layer => {
-//   console.log(layer)
-// })
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 50
+})
 
-app.use('/weather', routes)
-// app.get('/weather', (req, res) => {
-//   res.send('triggered...')
-// })
+app.use('/weather', limiter, weatherRoutes)
+app.use('/user', limiter, userRoutes)
 
-app.get('/users', paginatedResults(User), (req, res) => {
+app.get('/users', limiter, paginatedResults(User), (req, res) => {
 
   res.json(res)
 })

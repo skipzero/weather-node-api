@@ -1,30 +1,96 @@
 const express = require('express')
-const routes = express.Router()
+const weatherRoutes = express.Router()
+const Weather = require('../models/weather')
 
 // get all
-routes.get('/', (req, res) => {
-  res.send('get all called...')
+weatherRoutes.get('/', async (req, res) => {
+  try {
+    const allWeather = await Weather.find()
+    res.json(allWeather)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 })
 
 // get one
-routes.get('/:id', (req, res) => {
+weatherRoutes.get('/:id', (req, res) => {
   res.send(req.params.id)
 })
 
 // create one
-routes.post('/', (req, res) => {
-  const body = req.body
+weatherRoutes.post('/',async  (req, res) => {
+  const {
+    winddir,
+    windspeedmph,
+    windgustmph,
+    maxdailygust,
+    lastRain,
+    eventrainin,
+    hourlyrainin,
+    weeklyrainin,
+    monthlyrainin,
+    totalrainin,
+    tempf,
+    humidity,
+    baromabsin,
+    baromrelin,
+    feelsLike,
+    dewpoint,
+    solarradiation,
+    uv,
+
+  } = req.body
+  const weather = new Weather({
+    date: new Date(),
+    wind: {
+      windDir: winddir,
+      windSpeed: windspeedmph,
+      windGust: windgustmph,
+      maxDailyGust: maxdailygust
+    },
+    rain: {
+      lastRain,
+      eventRain: eventrainin,
+      hourlyRain: hourlyrainin,
+      weeklyRain: weeklyrainin,
+      monthlyRain: monthlyrainin,
+      totalRain: totalrainin,
+    },
+    temp: {
+      tempf,
+      feelsLike: feelsLike,
+      dewPoint: dewpoint,
+    },
+    humBar: {
+      humidity,
+      baromAbs: baromabsin,
+      baromRel: baromrelin,
+
+    },
+    uvSolar: {
+      uvIndex: uv,
+      solarRad: solarradiation,
+    }
+  })
+
+  try {
+    const newWeather = await weather.save()
+    await console.log('*******', newWeather)
+    res.status(201).json(newWeather)
+  } catch(err) {
+    res.status(400).json({ message: err.message })
+  }
 })
 
 // updating one
-routes.patch('/:id', (req, res) => {
+weatherRoutes.patch('/:id', (req, res) => {
 
 })
 
 
 // delete one
-routes.get('/:id', (req, res) => {
+weatherRoutes.get('/:id', (req, res) => {
 
 })
 
-module.exports = routes
+module.exports = weatherRoutes

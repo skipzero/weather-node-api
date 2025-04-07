@@ -2,3 +2,38 @@ GET http://localhost:3000/users?page=3&limit=5
 
 #####
 GET http://localhost:3000/weather/23
+
+###
+POST http://localhost:3000/weather
+Content-Type: application/json
+
+{
+  "winddir": 87,
+  "windspeedmph": 999,
+  "windgustmph": 45,
+  "maxdailygustmph": 54,
+  "lastRain": "12-12-2012",
+  "eventrainin": 21,
+  "hourlyrainin": 11,
+  "weeklyrainin": 1.03,
+  "monthlyrainin": 2.8,
+  "totalrainin": 3.78,
+  "tempf": 68,
+  "feelslike": 67,
+  "dewpoint": 55,
+  "baromabsin": 77,
+  "baromrelin": 76,
+  "uv": 1203,
+  "solarradiation": 888
+
+}
+
+###
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "name": "user name11",
+  "email": "jinx@jinx.com",
+  "userName": "jinx1138"
+}
