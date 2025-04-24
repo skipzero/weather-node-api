@@ -2,6 +2,9 @@ const express = require('express')
 const weatherRoutes = express.Router()
 const Weather = require('../models/weather')
 
+const chalk = require('chalk')
+const log = console.log
+
 // get all
 weatherRoutes.get('/', async (req, res) => {
   try {
@@ -19,6 +22,10 @@ weatherRoutes.get('/:id', (req, res) => {
 
 // create one
 weatherRoutes.post('/',async  (req, res) => {
+  
+  const address = 'Warfield, Oakland, Lake Merritt'
+  const date = new Date();
+
   const {
     winddir,
     windspeedmph,
@@ -27,6 +34,7 @@ weatherRoutes.post('/',async  (req, res) => {
     lastRain,
     eventrainin,
     hourlyrainin,
+    dailyrainin,
     weeklyrainin,
     monthlyrainin,
     totalrainin,
@@ -35,47 +43,52 @@ weatherRoutes.post('/',async  (req, res) => {
     baromabsin,
     baromrelin,
     feelsLike,
-    dewpoint,
+    dewPoint,
     solarradiation,
     uv,
+  } = req.body;
 
-  } = req.body
+
+  const lastrain = new Date(lastRain)
+
   const weather = new Weather({
-    date: new Date(),
+    
+    address,
     wind: {
-      windDir: winddir,
-      windSpeed: windspeedmph,
-      windGust: windgustmph,
-      maxDailyGust: maxdailygust
+      winddir,
+      windspeedmph,
+      windgustmph,
+      maxdailygust
     },
     rain: {
-      lastRain,
-      eventRain: eventrainin,
-      hourlyRain: hourlyrainin,
-      weeklyRain: weeklyrainin,
-      monthlyRain: monthlyrainin,
-      totalRain: totalrainin,
+      lastrain,
+      eventrainin,
+      hourlyrainin,
+      dailyrainin,
+      weeklyrainin,
+      monthlyrainin,
+      totalrainin,
     },
     temp: {
       tempf,
-      feelsLike: feelsLike,
-      dewPoint: dewpoint,
+      feelsLike,
+      dewPoint,
     },
     humBar: {
       humidity,
-      baromAbs: baromabsin,
-      baromRel: baromrelin,
-
+      baromabsin,
+      baromrelin,
     },
     uvSolar: {
-      uvIndex: uv,
-      solarRad: solarradiation,
-    }
+      uv,
+      solarradiation,
+    },
+    date,
   })
 
   try {
     const newWeather = await weather.save()
-    await console.log('*******', newWeather)
+    await log('*******', 'TRY', newWeather)
     res.status(201).json(newWeather)
   } catch(err) {
     res.status(400).json({ message: err.message })

@@ -8,7 +8,7 @@ const  User = require('./models/users.js')
 
 const weatherRoutes = require('./routes/weatherRoutes')
 const userRoutes = require('./routes/userRoutes')
-const {MONGODB_URL, PORT, DB_NAME} = process.env
+const {MONGODB_URL, PORT, DB_NAME, API_KEY} = process.env
 
 const app = express()
 
@@ -24,10 +24,17 @@ const dbName = 'pagination'
 
 app.use(express.json())
 
+const customHeader = (req, res, next) => {
+  res.setHeader('X-Powered-By', 'Poe the cat')
+  next()
+}
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 50
 })
+
+app.use(customHeader)
 
 app.use('/weather', limiter, weatherRoutes)
 app.use('/user', limiter, userRoutes)

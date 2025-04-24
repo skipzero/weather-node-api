@@ -1,72 +1,72 @@
 const mongoose = require('mongoose');
 
 const weatherSchema = new mongoose.Schema({
-  date: {
-    type: Date,
-    index: true,
+  address: {
+    type: String,
     trim: true,
-    // required: true,
+    required: false
   },
+
   wind: {
-    windDir: {
+    winddir: {
       type: Number,
       trim: true,
       // required: true
     },
-    windSpeed: {
+    windspeedmph: {
       type: Number,
       trim: true,
       // required: true,
     },
-    windGust: {
+    windgustmph: {
       type: Number,
       trim: true,
       // required: true,
     },
-    maxDailyGust: {
+    maxdailygust: {
       type: Number,
       trim: true,
       // required: true
     }
   },
   rain: {
-    lastRain: {
+    lastrain: {
       type: Date,
       rquired: true
     },
-    eventRain: {
+    eventrainin: {
       type: Number,
       trim: true,
       // required: true
     },
-    hourlyRain: {
+    hourlyrainin: {
       type: Number,
       trim: true,
       // required: true
     },
-    dailyRain: {
+    dailyrainin: {
       type: Number,
       trim: true,
       // required: true
     },
-    weeklyRain: {
+    weeklyrainin: {
       type: Number,
       trim: true,
       // required: true,
     },
-    monthlyRain: {
+    monthlyrainin: {
       type: Number,
       trim: true,
       // required: true,
     },
-    totalRain: {
+    totalrainin: {
       type: Number,
       trim: true,
       // required: true,
     }
   },
   temp: {
-    outTemp: {
+    tempf: {
       type: Number,
       trim: true,
       // required: true,
@@ -88,12 +88,12 @@ const weatherSchema = new mongoose.Schema({
       trim: true,
       // required: true,
     },
-    baromAbs: {
+    baromabsin: {
       type: Number,
       trim: true,
       // required: true,
     },
-    baromRel: {
+    baromrelin: {
       type: Number,
       trim: true,
       // required: true,
@@ -101,17 +101,23 @@ const weatherSchema = new mongoose.Schema({
     
   },
   uvSolar: {
-    uvIndex: {
+    uv: {
       type: Number,
       trim: true,
       // required: true,
     },
-    solarRad: {
+    solarradiation: {
       type: Number,
       trim: true,
       // required: true,
     }
-  }
+  },
+  date: {
+    type: Date,
+    index: true,
+    trim: true,
+    // required: true,
+  },
 })
 
 module.exports = mongoose.model('weather', weatherSchema, 'weather')
