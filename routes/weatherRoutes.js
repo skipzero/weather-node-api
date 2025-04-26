@@ -2,9 +2,6 @@ const express = require('express')
 const weatherRoutes = express.Router()
 const Weather = require('../models/weather')
 
-const chalk = require('chalk')
-const log = console.log
-
 // get all
 weatherRoutes.get('/', async (req, res) => {
   try {
@@ -88,7 +85,6 @@ weatherRoutes.post('/',async  (req, res) => {
 
   try {
     const newWeather = await weather.save()
-    await log('*******', 'TRY', newWeather)
     res.status(201).json(newWeather)
   } catch(err) {
     res.status(400).json({ message: err.message })
