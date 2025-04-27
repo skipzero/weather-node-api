@@ -1,6 +1,7 @@
 const express = require('express')
 const weatherRoutes = express.Router()
 const Weather = require('../models/weather')
+const {check, expressValidationResults} = require('express-validator')
 
 // get all
 weatherRoutes.get('/', async (req, res) => {
@@ -13,8 +14,15 @@ weatherRoutes.get('/', async (req, res) => {
 })
 
 // get one
-weatherRoutes.get('/:id', (req, res) => {
-  res.send(req.params.id)
+weatherRoutes.get('/:id', async(req, res) => {
+  const id = req.params.id;
+  try {
+    const oneWeather = await Weather.findOne({ _id: id })
+    res.json(oneWeather)
+  } catch(err) {
+    res.status(500).json({ message: err.message })
+  }
+  
 })
 
 // create one

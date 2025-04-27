@@ -33,8 +33,6 @@ const postData = async d => {
     uv,
   } = d
 
-  const address = 'warfield station'
-
   const body = {
 
     // address,
@@ -69,11 +67,10 @@ const postData = async d => {
     },
     body: JSON.stringify(body),
   }
-  console.log('>>>>>>>>>>>>>>>>>.', body, '<<<<<<<<<<<<<<<<<<')
 
   try {
     axios.post('http://localhost:3000/weather', body)
-      .then(resp => console.log('*******',resp, '********'))
+      .then(resp => console.log('*******',body, '********'))
       .catch(err => console.error(err))
   } catch (err) {
     console.error(`Server error: ${err.message}`)
