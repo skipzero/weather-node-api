@@ -1,6 +1,11 @@
 const axios = require('axios')
 require('dotenv').config()
 const AmbientWeatherApi = require('ambient-weather-api')
+const {APP_KEY, API_KEY} = process.env
+const apiKey = API_KEY;
+const applicationKey = APP_KEY;
+
+console.log(APP_KEY, API_KEY)
 
 // helper function
 function getName (device) {
@@ -9,7 +14,6 @@ function getName (device) {
 
 // API call to add document to mongoDB
 const postData = async d => {
-  // const location = window.location.hostname; 
 
   const {
     winddir,
@@ -78,10 +82,10 @@ const postData = async d => {
   }
 }
 
-const apiKey = process.env.API_KEY
+// creates a new instance of the AmbientWeatherApi class 
 const api = new AmbientWeatherApi({
   apiKey,
-  applicationKey: process.env.APP_KEY
+  applicationKey
 })
 
 api.connect()

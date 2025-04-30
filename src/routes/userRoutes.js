@@ -1,20 +1,28 @@
 const express = require('express')
 const userRoutes = express.Router()
-const User = require('../models/users')
+const User = require('../../models/users')
 
 // get all
 userRoutes.get('/', async (req, res) => {
   try {
-    const allUsers = await User.find()
-    res.json(allUsers)
+    const allUser = await User.find()
+    res.json(allUser)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
 })
 
 // get one
-userRoutes.get('/:id', (req, res) => {
-  res.send(req.params.id)
+userrRoutes.get('/:id', async(req, res) => {
+  const id = req.params.id;
+  try {
+    const oneUser = await User.findOne({ email })
+    // const oneUser = await User.findOne({ _id: id })
+    res.json(oneUser)
+  } catch(err) {
+    res.status(500).json({ message: err.message })
+  }
+  
 })
 
 // create one

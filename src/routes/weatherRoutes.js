@@ -1,6 +1,9 @@
 const express = require('express')
 const weatherRoutes = express.Router()
-const Weather = require('../models/weather')
+const Weather = require('../../models/weather.js')
+
+const paginate = require('../../utils/utils.js')
+
 const {check, expressValidationResults} = require('express-validator')
 
 // get all
