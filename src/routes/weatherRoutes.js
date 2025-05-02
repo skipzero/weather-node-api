@@ -1,10 +1,13 @@
-const express = require('express')
+import  express from 'express'
 const weatherRoutes = express.Router()
-const Weather = require('../../models/weather.js')
+import { ObjectId } from 'mongodb'
 
-const paginate = require('../../utils/utils.js')
+import Weather from '../models/weather.cjs'
 
-const {check, expressValidationResults} = require('express-validator')
+import paginate from '../utils/utils.js'
+
+import pkg from 'express-validator';
+const {check, expressValidationResults} = pkg;
 
 // get all
 weatherRoutes.get('/', async (req, res) => {
@@ -32,7 +35,6 @@ weatherRoutes.get('/:id', async(req, res) => {
 weatherRoutes.post('/',async  (req, res) => {
   
   const address = 'Warfield, Oakland, Lake Merritt'
-  const date = new Date();
 
   const {
     winddir,
@@ -54,11 +56,12 @@ weatherRoutes.post('/',async  (req, res) => {
     dewPoint,
     solarradiation,
     uv,
+    date
   } = req.body;
 
 
   const lastrain = new Date(lastRain)
-
+  
   const weather = new Weather({
     
     address,
@@ -113,4 +116,4 @@ weatherRoutes.get('/:id', (req, res) => {
 
 })
 
-module.exports = weatherRoutes
+export default weatherRoutes

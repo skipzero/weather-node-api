@@ -1,3 +1,6 @@
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -37,4 +40,4 @@ const userSchema = new mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('users', userSchema)
+export default mongoose.model('user', userSchema, 'user')

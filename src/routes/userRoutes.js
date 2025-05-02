@@ -1,7 +1,8 @@
-const express = require('express')
+import express from 'express'
 const userRoutes = express.Router()
-const User = require('../../models/users')
+import { ObjectId } from 'mongodb'
 
+import * as User from '../models/users.js'
 // get all
 userRoutes.get('/', async (req, res) => {
   try {
@@ -13,7 +14,7 @@ userRoutes.get('/', async (req, res) => {
 })
 
 // get one
-userrRoutes.get('/:id', async(req, res) => {
+userRoutes.get('/:id', async(req, res) => {
   const id = req.params.id;
   try {
     const oneUser = await User.findOne({ email })
@@ -54,4 +55,4 @@ userRoutes.get('/:id', (req, res) => {
 
 })
 
-module.exports = userRoutes
+export default  userRoutes

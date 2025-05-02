@@ -1,12 +1,13 @@
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 
-const express = require('express')
-const rateLimit = require('express-rate-limit')
+import express from 'express'
+import rateLimit from 'express-rate-limit'
 
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
-const weatherRoutes = require('../routes/weatherRoutes.js')
-const userRoutes = require('../routes/userRoutes.js')
+import weatherRoutes from './routes/weatherRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 const {MONGODB_URL, PORT, DB_NAME} = process.env
 
 const app = express()

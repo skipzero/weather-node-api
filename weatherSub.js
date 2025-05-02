@@ -1,11 +1,11 @@
-const axios = require('axios')
-require('dotenv').config()
+import  axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config()
+
 const AmbientWeatherApi = require('ambient-weather-api')
 const {APP_KEY, API_KEY} = process.env
 const apiKey = API_KEY;
 const applicationKey = APP_KEY;
-
-console.log(APP_KEY, API_KEY)
 
 // helper function
 function getName (device) {
