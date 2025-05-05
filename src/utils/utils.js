@@ -29,7 +29,7 @@ const pollStation = () => {
         , 1000 * 60 * .5)
         
         deviceData.forEach((data) => {
-          const date = new Date()
+          const date = new Date() 
           data.date = date
 
           console.log('*****', data.date, '******')

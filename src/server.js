@@ -33,6 +33,9 @@ const customHeader = (req, res, next) => {
 
 app.use(customHeader)
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'index.html'));
+})
 app.use('/weather', limiter, weatherRoutes)
 app.use('/user', limiter, userRoutes)
 
