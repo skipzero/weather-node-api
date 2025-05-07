@@ -26,7 +26,7 @@ const pollStation = () => {
         setTimeout(() => {
           pollStation()
         }
-        , 1000 * 60 * .5)
+        , 1000 * 60 * 5)
         
         deviceData.forEach((data) => {
           const date = new Date() 
