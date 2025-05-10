@@ -2,7 +2,7 @@ import  express from 'express'
 const weatherRoutes = express.Router()
 import { ObjectId } from 'mongodb'
 
-import Weather from '../models/weather.cjs'
+import Weather from '../models/weather.js'
 
 import paginate from '../utils/utils.js'
 
