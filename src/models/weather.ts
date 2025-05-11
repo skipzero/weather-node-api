@@ -1,5 +1,4 @@
 import { Schema, Model, Document, connect } from 'mongoose'
-import * as Mongoose from 'mongoose'
 
 interface IWeather {
   address: string,
@@ -158,7 +157,7 @@ const weatherSchema = new Schema({
 interface IWeatherDocument extends IWeather, Document {}
 interface IWeatherModel extends Model<IWeatherDocument> {}
 
-const WeatherModel: IWeatherModel = Mongoose.model.weather || Mongoose.model<IWeatherDocument>('weather', weatherSchema, 'weather')
+const WeatherModel: IWeatherModel = Model.weather || Model<IWeatherDocument>('weather', weatherSchema, 'weather')
 
 
 

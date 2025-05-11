@@ -113,7 +113,7 @@
     "files": true
   },
   "include": [
-    "src/**/*.ts", "src/server.js",
+    "src/**/*.ts", "src/**/*", "src/server.js",
   ],
   "exclude": [
     "node_modules",

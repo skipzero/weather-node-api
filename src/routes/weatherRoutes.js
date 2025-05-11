@@ -4,7 +4,7 @@ import { ObjectId } from 'mongodb'
 
 import Weather from '../models/weather.js'
 
-import paginate from '../utils/utils.js'
+//import paginate from '../utils/utils.js'
 
 import pkg from 'express-validator';
 const {check, expressValidationResults} = pkg;
@@ -32,8 +32,8 @@ weatherRoutes.get('/:id', async(req, res) => {
 })
 
 // create one
-weatherRoutes.post('/',async  (req, res) => {
-  
+weatherRoutes.post('/', async (req, res) => {
+
   const address = 'Warfield, Oakland, Lake Merritt'
 
   const {
@@ -106,13 +106,78 @@ weatherRoutes.post('/',async  (req, res) => {
 })
 
 // updating one
-weatherRoutes.patch('/:id', (req, res) => {
+weatherRoutes.patch('/:id', async (req, res) => {
+  try {
+    const id = req.params.id
+    const weather = await Weather.findById(id)
+    if (!weather) {
+      return res.status(404).json({ message: 'Record not found' })
+    }
+    const { 
+      address, 
+      winddir, 
+      windspeedmph, 
+      windgustmph, 
+      maxdailygust,
+      lastRain,
+      eventrainin,
+      hourlyrainin,
+      dailyrainin,
+      weeklyrainin,
+      monthlyrainin,
+      totalrainin,
+      tempf,
+      humidity,
+      baromabsin,
+      baromrelin,
+      feelsLike,
+      dewPoint,
+      solarradiation,
+      uv,
+      date 
+    } = req.body
+    weather.address = address
+    weather.wind.winddir = winddir
+    weather.wind.windspeedmph = windspeedmph
+    weather.wind.windgustmph = windgustmph
+    weather.wind.maxdailygust = maxdailygust
+    weather.rain.lastrain = lastRain
+    weather.rain.eventrainin = eventrainin
+    weather.rain.hourlyrainin = hourlyrainin
+    weather.rain.dailyrainin = dailyrainin
+    weather.rain.weeklyrainin = weeklyrainin
+    weather.rain.monthlyrainin = monthlyrainin
+    weather.rain.totalrainin = totalrainin
+    weather.temp.tempf = tempf
+    weather.temp.feelsLike = feelsLike
+    weather.temp.dewPoint = dewPoint
+    weather.humBar.humidity = humidity
+    weather.humBar.baromabsin = baromabsin
+    weather.humBar.baromrelin = baromrelin
+    weather.uvSolar.uv = uv
+    weather.uvSolar.solarradiation = solarradiation
+    weather.date = date
 
+    const updatedWeather = await weather.save()
+    res.json(updatedWeather)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
 })
 
 
 // delete one
-weatherRoutes.get('/:id', (req, res) => {
+weatherRoutes.delete('/:id', async (req, res) => {
+  try {
+    const id = req.params.id
+    const weather = Weather.findByIdAndDelete(id)
+    if (!weather) {
+      return res.status(404).json({ message: 'Record not found' })
+    }
+    res.json({ message: 'Weather deleted' })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 
 })
 
