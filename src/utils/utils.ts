@@ -1,11 +1,12 @@
+import crypto from 'crypto'
 import dotenv from 'dotenv'
 dotenv.config()
 import axios from 'axios';
 
 import AmbientWeatherApi from 'ambient-weather-api'
+const { APP_KEY, API_KEY, SECRET }  = process.env;
 
 const pollStation = () => {
-  const { APP_KEY, API_KEY }  = process.env;
 
   const api = new AmbientWeatherApi({
     apiKey: API_KEY,
@@ -22,7 +23,6 @@ const pollStation = () => {
         limit: 1
       })
       .then((deviceData) => {
-            // let count = 0;
         setTimeout(() => {
           pollStation()
         }
@@ -44,48 +44,14 @@ const pollStation = () => {
   })
 }
 
+export const random = () => crypto.randomBytes(128).toString('base64').replace(/=/g, '')
+export const authentication = (salt: string, password: string) => {
+  return crypto.createHmac('sha256', [salt, password].join()).update(SECRET!).digest('hex')
+}
+
 
 export default { 
   pollStation,
 }
 
 pollStation()
-
-// 
-// 
-// 
-// const pagination = (model) => {
-//   return async (req, res, next) => {
-//     const page = parseInt(req.query.page)
-//     const limit = parseInt(req.query.limit)
-// 
-//     const startIndex = (page - 1) * limit;
-//     const endIndex = page * limit;
-// 
-//     const results = [];
-// 
-//     if (startIndex > 0) {
-//       results.previous = {
-//         page: page - 1,
-//         limit
-//       }
-//     }
-// 
-//     if (endIndex < model.length) {
-//       results.next = {
-//         page: page + 1,
-//         limit
-//       }
-//     }
-// 
-//     try {
-//       results.results = await model.find().limit(limit).skip(startIndex).exec()
-//       res.paginateResults = results;
-//       next()
-//     } catch (err) {
-//       console.error(error)
-//     }
-//   }
-// }
-// 
-// module.exports = pagination;
