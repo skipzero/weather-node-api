@@ -8,6 +8,12 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+import morgan from 'morgan'
+import compression from 'compression'
+import cors from 'cors'
+
 import express from 'express'
 import rateLimit from 'express-rate-limit'
 
@@ -31,7 +37,15 @@ const db = mongoose.connection
 db.on('error', err => console.error(`Error: ${err}`))
 db.once('open', () => console.log('db open...'))
 
-app.use(express.json())
+const morganLogPath = path.join(__dirname, 'logs', 'access.log')
+
+app.use(cors({
+  credentials: true,
+}))
+app.use(compression())
+app.use(cookieParser())
+app.use(bodyParser.json())
+app.use(morgan('dev', {stream: morganLogPath}))
 
 const customHeader = (req, res, next) => {
   res.setHeader('X-Powered-By', 'Poe the cat')
