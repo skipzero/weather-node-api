@@ -9,14 +9,14 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
-import helmet from 'helmet'
 import express from 'express'
 import mongoose from 'mongoose'
 import morgan from 'morgan'
 
 import rateLimit from 'express-rate-limit'
 
-import weatherRoutes from './routes/weatherRoutes.js'
+import weatherRoutes from './routes/weatherRoutes.ts'
+
 import userRoutes from './routes/userRoutes.ts'
 
 const {MONGODB_URL, PORT, DB_NAME} = process.env
@@ -50,7 +50,6 @@ app.use(cors({
 }))
 app.use(compression())
 app.use(cookieParser())
-app.use(helmet())
 app.use(express.json())
 app.use(bodyParser.json())
 

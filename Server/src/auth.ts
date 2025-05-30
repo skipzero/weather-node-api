@@ -1,6 +1,6 @@
 import express from 'express';
-import { getUserByEmail, createUser } from '../models/users';
-import { random, authentication } from '../utils/utils';
+import { getUserByEmail, createUser } from './models/users';
+import { random, authentication } from './utils/utils';
 
 export const register = async (req: express.Request, res: express.Response) => {
   try {
